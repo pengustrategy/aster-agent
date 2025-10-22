@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:frontend": "cd frontend && npm run dev",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "tsc && cd frontend && npm run build",
+    "start": "node dist/index.js & cd frontend && npm start",
+    "start:backend": "node dist/index.js",
+    "start:frontend": "cd frontend && npm start",
     "agent1": "ts-node src/agents/agent1-collector.ts",
     "agent2": "ts-node src/agents/agent2-optimizer.ts",
     "agent3": "ts-node src/agents/agent3-executor.ts",
