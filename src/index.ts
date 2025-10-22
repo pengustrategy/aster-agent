@@ -25,21 +25,40 @@ app.use((req, res, next) => {
 // ==================== API Routes ====================
 
 /**
- * Root route - redirect to frontend or show status
+ * Serve frontend static files
+ */
+const path = require('path');
+const frontendPath = path.join(__dirname, '../frontend/.next');
+
+// Serve Next.js static files
+app.use(express.static(path.join(__dirname, '../frontend/.next/static')));
+app.use(express.static(path.join(__dirname, '../frontend/public')));
+
+/**
+ * Root route - serve frontend or API info
  */
 app.get('/', (req, res) => {
-  res.json({
-    name: 'Aster Trading Agent',
-    status: 'running',
-    version: '1.0.0',
-    message: 'Agent system is running. Access Dashboard at /dashboard or API at /api/*',
-    endpoints: {
-      health: '/api/health',
-      wallet: '/api/wallet',
-      positions: '/api/positions',
-      conversation: '/api/conversation',
-    },
-  });
+  // Check if request is from browser (Accept: text/html)
+  const acceptsHtml = req.headers.accept?.includes('text/html');
+  
+  if (acceptsHtml) {
+    // Serve frontend HTML
+    res.sendFile(path.join(__dirname, '../frontend/.next/server/pages/index.html'));
+  } else {
+    // Return API info
+    res.json({
+      name: 'Aster Trading Agent',
+      status: 'running',
+      version: '1.0.0',
+      message: 'Agent system is running',
+      endpoints: {
+        health: '/api/health',
+        wallet: '/api/wallet',
+        positions: '/api/positions',
+        conversation: '/api/conversation',
+      },
+    });
+  }
 });
 
 /**
