@@ -142,14 +142,32 @@ export class AgentOrchestrator {
         return;
       }
 
-      const agent3Output = await agent3.execute(agent2Output.optimizedStrategy);
+      try {
+        const agent3Output = await agent3.execute(agent2Output.optimizedStrategy);
 
-      this.logConversation({
-        agent: 'agent3' as AgentType,
-        timestamp: new Date(),
-        status: 'success' as any,
-        data: agent3Output,
-      });
+        this.logConversation({
+          agent: 'agent3' as AgentType,
+          timestamp: new Date(),
+          status: 'success' as any,
+          data: agent3Output,
+        });
+
+        console.log('\n═══════════════════════════════════════════');
+        console.log('   CYCLE COMPLETE - All Agents Executed');
+        console.log('═══════════════════════════════════════════\n');
+      } catch (error) {
+        console.error('\n❌ === AGENT 3: Execution Failed === ❌');
+        console.error(error);
+        
+        // Still log the failure
+        this.logConversation({
+          agent: 'agent3' as AgentType,
+          timestamp: new Date(),
+          status: 'error' as any,
+          data: null,
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
 
       console.log('\n═══════════════════════════════════════════');
       console.log('   CYCLE COMPLETE - All Agents Executed');
