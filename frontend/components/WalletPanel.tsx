@@ -14,7 +14,8 @@ export function WalletPanel() {
 
   const fetchWalletInfo = async () => {
     try {
-      const response = await axios.get('/api/wallet');
+      const baseURL = process.env.NEXT_PUBLIC_API_URL || '';
+      const response = await axios.get(`${baseURL}/api/wallet`);
       setWalletInfo(response.data);
     } catch (error) {
       console.error('Failed to fetch wallet info:', error);

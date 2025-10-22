@@ -27,9 +27,10 @@ export function CentralChart({ positions }: CentralChartProps) {
   useEffect(() => {
     const fetchWalletData = async () => {
       try {
+        const baseURL = process.env.NEXT_PUBLIC_API_URL || '';
         const [walletRes, positionsRes] = await Promise.all([
-          axios.get('/api/wallet'),
-          axios.get('/api/positions'),
+          axios.get(`${baseURL}/api/wallet`),
+          axios.get(`${baseURL}/api/positions`),
         ]);
 
         // 计算当前总盈亏

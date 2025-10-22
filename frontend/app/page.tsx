@@ -23,10 +23,11 @@ export default function Dashboard() {
 
   const fetchData = async () => {
     try {
+      const baseURL = process.env.NEXT_PUBLIC_API_URL || '';
       const [statusRes, positionsRes, conversationRes] = await Promise.all([
-        axios.get('/api/status'),
-        axios.get('/api/positions'),
-        axios.get('/api/conversation'),
+        axios.get(`${baseURL}/api/status`),
+        axios.get(`${baseURL}/api/positions`),
+        axios.get(`${baseURL}/api/conversation`),
       ]);
 
       setSystemStatus(statusRes.data);
@@ -35,6 +36,7 @@ export default function Dashboard() {
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch data:', error);
+      setLoading(false); // Stop loading even on error
     }
   };
 

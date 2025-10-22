@@ -16,7 +16,8 @@ export function BottomTicker() {
   useEffect(() => {
     const fetchRealPrices = async () => {
       try {
-        const response = await axios.get('/api/tickers');
+        const baseURL = process.env.NEXT_PUBLIC_API_URL || '';
+        const response = await axios.get(`${baseURL}/api/tickers`);
         if (response.data && Object.keys(response.data).length > 0) {
           // 只更新有效数据，保留默认值作为备份
           const updated = { ...prices };
