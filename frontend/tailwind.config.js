@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'inter': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: '#F59E0B',
