@@ -1,0 +1,46 @@
+{
+  "name": "aster-trading-agents",
+  "version": "1.0.0",
+  "description": "Multi-Agent Automated Trading System for Aster DEX on BSC",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "agent1": "ts-node src/agents/agent1-collector.ts",
+    "agent2": "ts-node src/agents/agent2-optimizer.ts",
+    "agent3": "ts-node src/agents/agent3-executor.ts",
+    "test": "jest",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
+  },
+  "keywords": ["trading", "agent", "BSC", "Aster", "automation"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@prisma/client": "^5.22.0",
+    "ethers": "^6.13.0",
+    "express": "^4.21.2",
+    "ws": "^8.18.0",
+    "axios": "^1.7.0",
+    "redis": "^4.7.0",
+    "socket.io": "^4.8.1",
+    "dotenv": "^16.4.7",
+    "zod": "^3.23.8",
+    "date-fns": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "prisma": "^5.22.0",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0"
+  }
+}
+
