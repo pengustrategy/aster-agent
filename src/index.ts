@@ -25,37 +25,33 @@ app.use((req, res, next) => {
 // ==================== API Routes ====================
 
 /**
- * Serve frontend static files
+ * Serve frontend static files from Next.js build
  */
 const path = require('path');
-const frontendPath = path.join(__dirname, '../frontend/.next');
+const fs = require('fs');
 
-// Serve Next.js static files
-app.use(express.static(path.join(__dirname, '../frontend/.next/static')));
+// Serve Next.js static assets
+app.use('/_next', express.static(path.join(__dirname, '../frontend/.next')));
+app.use('/static', express.static(path.join(__dirname, '../frontend/.next/static')));
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 /**
- * Root route - serve frontend or API info
+ * Root route and all other routes - serve Next.js or API
  */
 app.get('/', (req, res) => {
-  // Check if request is from browser (Accept: text/html)
-  const acceptsHtml = req.headers.accept?.includes('text/html');
+  const indexPath = path.join(__dirname, '../frontend/out/index.html');
   
-  if (acceptsHtml) {
-    // Serve frontend HTML
-    res.sendFile(path.join(__dirname, '../frontend/.next/server/pages/index.html'));
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
   } else {
-    // Return API info
     res.json({
       name: 'Aster Trading Agent',
       status: 'running',
-      version: '1.0.0',
-      message: 'Agent system is running',
+      message: 'Backend API is running. Frontend build in progress.',
       endpoints: {
         health: '/api/health',
         wallet: '/api/wallet',
         positions: '/api/positions',
-        conversation: '/api/conversation',
       },
     });
   }

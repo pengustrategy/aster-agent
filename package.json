@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:frontend": "cd frontend && npm run dev",
-    "build": "tsc && cd frontend && npm install && npm run build",
-    "start": "concurrently \"node dist/index.js\" \"cd frontend && npx serve -s .next -l 3000\"",
+    "build": "tsc && cd frontend && npm install && npm run build && cd ..",
+    "start": "node dist/index.js",
     "start:backend": "node dist/index.js",
     "start:frontend": "cd frontend && npx serve -s .next -l 3000",
     "agent1": "ts-node src/agents/agent1-collector.ts",
