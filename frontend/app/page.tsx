@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AgentCard } from '../components/AgentCard';
+import { MarketOverview } from '../components/MarketOverview';
+import { AgentRanking } from '../components/AgentRanking';
+import { OrderBookPositions } from '../components/OrderBookPositions';
 import { CentralChart } from '../components/CentralChart';
 import { BottomTicker } from '../components/BottomTicker';
 import { TopControls } from '../components/TopControls';
-import { WalletPanel } from '../components/WalletPanel';
-import { PositionsPanel } from '../components/PositionsPanel';
 
 export default function Dashboard() {
   const [systemStatus, setSystemStatus] = useState<any>(null);
@@ -36,7 +36,7 @@ export default function Dashboard() {
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch data:', error);
-      setLoading(false); // Stop loading even on error
+      setLoading(false);
     }
   };
 
@@ -67,13 +67,9 @@ export default function Dashboard() {
     }
   };
 
-  const agent1Messages = conversation.filter(m => m.agent === 'agent1');
-  const agent2Messages = conversation.filter(m => m.agent === 'agent2');
-  const agent3Messages = conversation.filter(m => m.agent === 'agent3');
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="h-screen flex items-center justify-center bg-black">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-yellow-500 mx-auto mb-4"></div>
           <p className="text-yellow-400 text-lg">Loading Aster Agent...</p>
@@ -94,78 +90,36 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Main Content - Responsive Layout */}
-      <div className="flex flex-1 overflow-hidden min-h-0 flex-col md:flex-row">
-        {/* Left Sidebar - Agent 1 & Agent 2 + Wallet */}
-        <div className="w-full md:w-80 border-b md:border-r md:border-b-0 border-gray-800 flex flex-col max-h-1/3 md:max-h-full">
-          <div className="flex-shrink-0 p-4">
-            {/* Wallet Info - Fixed at top */}
-            <WalletPanel />
-          </div>
-          
-          {/* Scrollable Agent Conversation */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {/* Interleaved Agent Messages - 对话模式 */}
-            {conversation.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-gray-700 text-4xl mb-3">🤖</div>
-                <div className="text-xs text-gray-600">Waiting for Agent conversation...</div>
-                <div className="text-xs text-gray-700 mt-2">System analyzing every 5 minutes</div>
-              </div>
-            ) : (
-              conversation.slice().reverse().filter(m => m.agent === 'agent1' || m.agent === 'agent2').map((msg, idx) => (
-                <AgentCard
-                  key={idx}
-                  agent={msg.agent as any}
-                  message={msg}
-                  agentName=""
-                  agentIcon=""
-                />
-              ))
-            )}
+      {/* Market Overview - 4 Coins */}
+      <div className="flex-shrink-0">
+        <MarketOverview />
+      </div>
+
+      {/* Main Content - 2 Column Layout (30% | 70%) */}
+      <div className="flex flex-1 overflow-hidden min-h-0">
+        {/* Left Sidebar - 30% */}
+        <div className="w-full lg:w-[30%] border-r border-gray-800 flex flex-col overflow-hidden">
+          {/* Agent Ranking */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <AgentRanking conversation={conversation} />
           </div>
         </div>
 
-        {/* Center - Chart */}
-        <div className="flex-1 flex flex-col">
-          <CentralChart positions={positions} />
-        </div>
-
-        {/* Right Sidebar - Agent 3 & Positions */}
-        <div className="w-full md:w-80 border-t md:border-l md:border-t-0 border-gray-800 flex flex-col max-h-1/3 md:max-h-full">
-          <div className="flex-shrink-0 p-4">
-            {/* Positions Panel - Fixed at top */}
-            <PositionsPanel positions={positions} />
+        {/* Right Side - 70% */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Large Chart Area */}
+          <div className="flex-1 min-h-0">
+            <CentralChart positions={positions} />
           </div>
 
-          {/* Scrollable Agent 3 Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {agent3Messages.length === 0 ? (
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-bold text-green-400">AGENT 3</span>
-                  <span className="text-xs text-gray-600">--:--:--</span>
-                </div>
-                <div className="text-xs text-gray-600 py-6 text-center">
-                  Awaiting execution...
-                </div>
-              </div>
-            ) : (
-              agent3Messages.slice().reverse().map((msg, idx) => (
-                <AgentCard
-                  key={idx}
-                  agent="agent3"
-                  message={msg}
-                  agentName=""
-                  agentIcon=""
-                />
-              ))
-            )}
+          {/* Positions / Order Book */}
+          <div className="h-64 border-t border-gray-800 overflow-y-auto p-4">
+            <OrderBookPositions positions={positions} />
           </div>
         </div>
       </div>
 
-      {/* Bottom Ticker - Fixed at bottom */}
+      {/* Bottom Ticker */}
       <div className="flex-shrink-0">
         <BottomTicker />
       </div>
