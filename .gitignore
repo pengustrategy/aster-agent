@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables - NEVER COMMIT THESE!
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+.env.*.backup
+.env.test.backup
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Database and data files
+*.db
+*.sqlite
+data/
+*.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets - CRITICAL SECURITY
+**/private-key*
+**/secrets*
+*.pem
+*.key
+
+# Test files
+*.test.ts
+*.spec.ts
+coverage/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
