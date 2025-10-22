@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:frontend": "cd frontend && npm run dev",
-    "build": "tsc && cd frontend && npm run build",
-    "start": "node dist/index.js & cd frontend && npm start",
+    "build": "tsc && cd frontend && npm install && npm run build",
+    "start": "concurrently \"node dist/index.js\" \"cd frontend && npx serve -s .next -l 3000\"",
     "start:backend": "node dist/index.js",
-    "start:frontend": "cd frontend && npm start",
+    "start:frontend": "cd frontend && npx serve -s .next -l 3000",
     "agent1": "ts-node src/agents/agent1-collector.ts",
     "agent2": "ts-node src/agents/agent2-optimizer.ts",
     "agent3": "ts-node src/agents/agent3-executor.ts",
@@ -31,7 +31,9 @@
     "socket.io": "^4.8.1",
     "dotenv": "^16.4.7",
     "zod": "^3.23.8",
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "concurrently": "^8.2.2",
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
