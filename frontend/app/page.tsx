@@ -94,10 +94,10 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Main Content - 3 Column Layout */}
-      <div className="flex flex-1 overflow-hidden min-h-0">
+      {/* Main Content - Responsive Layout */}
+      <div className="flex flex-1 overflow-hidden min-h-0 flex-col md:flex-row">
         {/* Left Sidebar - Agent 1 & Agent 2 + Wallet */}
-        <div className="w-80 border-r border-gray-800 flex flex-col">
+        <div className="w-full md:w-80 border-b md:border-r md:border-b-0 border-gray-800 flex flex-col max-h-1/3 md:max-h-full">
           <div className="flex-shrink-0 p-4">
             {/* Wallet Info - Fixed at top */}
             <WalletPanel />
@@ -132,7 +132,7 @@ export default function Dashboard() {
         </div>
 
         {/* Right Sidebar - Agent 3 & Positions */}
-        <div className="w-80 border-l border-gray-800 flex flex-col">
+        <div className="w-full md:w-80 border-t md:border-l md:border-t-0 border-gray-800 flex flex-col max-h-1/3 md:max-h-full">
           <div className="flex-shrink-0 p-4">
             {/* Positions Panel - Fixed at top */}
             <PositionsPanel positions={positions} />

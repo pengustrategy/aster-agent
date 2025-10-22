@@ -12,25 +12,25 @@ interface TopControlsProps {
 
 export function TopControls({ systemStatus, onStart, onStop, onRunCycle }: TopControlsProps) {
   return (
-    <div className="bg-black border-b border-gray-800 px-6 py-3">
+    <div className="bg-black border-b border-gray-800 px-3 md:px-6 py-2 md:py-3">
       <div className="flex items-center justify-between">
         {/* Left - Logo & Title */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3">
           <img 
             src="/aster_agent.png" 
             alt="Aster Agent" 
-            className="h-10 w-10 object-contain"
+            className="h-8 md:h-10 w-8 md:w-10 object-contain"
           />
           <div>
-            <h1 className="text-lg font-bold text-yellow-400">
+            <h1 className="text-sm md:text-lg font-bold text-yellow-400">
               Aster Agent
             </h1>
           </div>
         </div>
 
         {/* Right - Status & Links */}
-        <div className="flex items-center space-x-6">
-          <div className="text-right">
+        <div className="flex items-center space-x-3 md:space-x-6">
+          <div className="text-right hidden md:block">
             <div className="text-xs text-gray-500">System Status</div>
             <div className={`text-sm font-bold ${
               systemStatus?.isRunning ? 'text-green-400' : 'text-gray-500'
@@ -41,7 +41,7 @@ export function TopControls({ systemStatus, onStart, onStop, onRunCycle }: TopCo
 
           <div className="text-right">
             <div className="text-xs text-gray-500">Daily P&L</div>
-            <div className={`text-lg font-bold ${
+            <div className={`text-sm md:text-lg font-bold ${
               (systemStatus?.dailyStats?.pnl || 0) >= 0 ? 'text-green-400' : 'text-red-400'
             }`}>
               {(systemStatus?.dailyStats?.pnl || 0) >= 0 ? '+' : ''}

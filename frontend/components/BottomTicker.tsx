@@ -103,7 +103,7 @@ export function BottomTicker() {
     <div className="bg-black border-t border-gray-800 overflow-hidden">
       <div className="flex items-center">
         <div className="flex-1 overflow-hidden">
-          <div className="ticker-scroll">
+          <div className="ticker-scroll text-xs md:text-sm">
             {coins.map((symbol, idx) => renderCoin(symbol, prices[symbol], idx))}
             {coins.map((symbol, idx) => renderCoin(symbol, prices[symbol], idx + 10))}
             {coins.map((symbol, idx) => renderCoin(symbol, prices[symbol], idx + 20))}
