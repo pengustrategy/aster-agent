@@ -25,6 +25,24 @@ app.use((req, res, next) => {
 // ==================== API Routes ====================
 
 /**
+ * Root route - redirect to frontend or show status
+ */
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Aster Trading Agent',
+    status: 'running',
+    version: '1.0.0',
+    message: 'Agent system is running. Access Dashboard at /dashboard or API at /api/*',
+    endpoints: {
+      health: '/api/health',
+      wallet: '/api/wallet',
+      positions: '/api/positions',
+      conversation: '/api/conversation',
+    },
+  });
+});
+
+/**
  * Health check
  */
 app.get('/api/health', (req, res) => {
